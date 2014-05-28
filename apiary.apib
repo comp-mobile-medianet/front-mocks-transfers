@@ -1,0 +1,660 @@
+FORMAT: 1A
+HOST: http://www.google.com
+
+# Transfers
+JSON contracts between back and front end for tranfers functionality
+
+# Group Tranfer list
+
+List of tranfsers
+
+Form parameters:
+<ul>
+    <li>transferId</li>
+    <li>sort</li>
+</ul>
+
+_eventId:
+<ul>
+    <li>To transfer detail: viewTransfer</li>
+</ul>
+
+## List of transfers [/pages/transfers/list.json]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "header": {
+                "showMenu": true
+            },
+            "pageContent": {
+                "empty": false,
+                "sortInfo": {
+                    "criteria": 0,
+                    "ascendant": false
+                },
+                "transfers": [
+                    {
+                        "transferId": "1234",
+                        "status": "PENDING",
+                        "type": "WITHIN_BANK",
+                        "date": 12351141411,
+                        "to": {
+                            "description": "SPCA of Texas",
+                            "accountLast4": "5222"
+                        },
+                        "amount": 100
+                    },
+                    {
+                        "transferId": "9876",
+                        "status": "PROCESSED",
+                        "type": "WITHIN_BANK",
+                        "date": 12355141411,
+                        "to": {
+                            "description": "Compass Bank. Eric's Credit Card",
+                            "accountLast4": null
+                        },
+                        "amount": 1118.34
+                    },
+                    {
+                        "transferId": "9666",
+                        "status": "PROCESSED",
+                        "type": "OWN_ACCOUNTS",
+                        "date": 12355141411,
+                        "to": {
+                            "description": "Other account",
+                            "accountLast4": "1124"
+                        },
+                        "amount": 623.34
+                    },
+                    {
+                        "transferId": "9722",
+                        "status": "CANCELLED",
+                        "type": "OTHER_ACCOUNTS",
+                        "date": 12372141411,
+                        "to": {
+                            "description": "Third account",
+                            "accountLast4": "8244"
+                        },
+                        "amount": 61.34
+                    },
+                    {
+                        "transferId": "7886",
+                        "status": "FAILED",
+                        "type": "WITHIN_BANK",
+                        "date": 12555141411,
+                        "to": {
+                            "description": "Compass Bank",
+                            "accountLast4": "9183"
+                        },
+                        "amount": 1000
+                    },
+                    {
+                        "transferId": "3832",
+                        "status": "DECLINED",
+                        "type": "INTERNATIONAL",
+                        "date": 12625141411,
+                        "to": {
+                            "description": "International Bank",
+                            "accountLast4": "6331"
+                        },
+                        "amount": 100
+                    }
+                ]
+            }
+        }
+
+## Empty Transfers [/pages/transfers/list.json?mockId=empty]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "header": {
+                "showMenu": true
+            },
+            "pageContent": {
+                "empty": true
+            }
+        }
+
+
+# Group Do Tranfer
+
+Transfers to:
+<ul>
+    <li>Within bank</li>
+    <li>Outside bank (ACH)</li>
+    <li>Domestic wire</li>
+</ul>
+
+Form parameters:
+<ul>
+    <li>fromAccountInternal</li>
+    <li>fromAccountExternal</li>
+    <li>payeeId</li>
+    <li>payeeType</li>
+    <li>toAccountOwn</li>
+    <li>amount</li>
+    <li>frequency</li>
+    <li>date</li>
+</ul>
+
+_eventId:
+<ul>
+    <li>To do transfer: doTransfer</li>
+</ul>
+
+## Do transfer with valid payees [/pages/transfers/transfer.json]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "pageContent": {
+                "properties": [
+                    {
+                        "payeeType": "T",
+                        "limits": {
+                            "transferLimit": 1000.00,
+                            "dailyLimit": 1500.00,
+                            "monthlyLimit": 3000.00
+                        },
+                        "fee": null,
+                        "dates": {
+                            "transferDate": null,
+                            "effectiveDate": null
+                        }
+                    },
+                    {
+                        "payeeType": "W",
+                        "limits": {
+                            "transferLimit": 1500.00,
+                            "dailyLimit": 1500.00,
+                            "monthlyLimit": 3000.00
+                        },
+                        "fee": null,
+                        "dates": {
+                            "transferDate": null,
+                            "effectiveDate": null
+                        }
+                    },
+                    {
+                        "payeeType": "A",
+                        "limits": {
+                            "transferLimit": 1000.00,
+                            "dailyLimit": 1500.00,
+                            "monthlyLimit": 3000.00
+                        },
+                        "fee": 3.00,
+                        "dates": {
+                            "transferDate": 13516234622,
+                            "effectiveDate": 16426245223
+                        }
+                    }
+                ],
+                "fromAccounts": {
+                    "internalAccounts": [
+                        {
+                            "key": "51251414141",
+                            "accountNickName": "Johnny",
+                            "accountLast4": "5566",
+                            "availableBal": 11000
+                        },
+                        {
+                            "key": "1515235113241",
+                            "accountNickName": "BBVA Account",
+                            "accountLast4": "1166",
+                            "availableBal": 1000.55
+                        },
+                        {
+                            "key": "616116151421",
+                            "accountNickName":"Cuenta BBVA",
+                            "accountLast4":"6122",
+                            "availableBal": 220.95
+                        },
+                        {
+                            "key": "67245267361",
+                            "accountNickName":"Credit account",
+                            "accountLast4":"6610",
+                            "availableBal": 1223.22
+                        }
+                    ],
+                    "externalAccounts": [
+                        {
+                            "externalId": "25965",
+                            "accountNickName": "Johnny",
+                            "accountLast4": "2696"
+                        },
+                        {
+                            "externalId": "259653434",
+                            "accountNickName": "ING",
+                            "accountLast4": "3698"
+                        },
+                        {
+                            "externalId": "255",
+                            "accountNickName": "SANTANDER",
+                            "accountLast4": "8996"
+                        },
+                        {
+                            "externalId": "255",
+                            "accountNickName": "SANTANDER",
+                            "accountLast4": "8996"
+                        }
+                    ]
+                },
+                "toAccounts": {
+                    "ownAccounts": [
+                        {
+                            "key": "51251414141",
+                            "accountNickName": "Johnny",
+                            "accountLast4": "5566",
+                            "availableBal": 11000,
+                            "accountType": "OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "1515235113241",
+                            "accountNickName": "BBVA Account",
+                            "accountLast4": "1166",
+                            "availableBal": 1000.55,
+                            "accountType": "OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "616116151421",
+                            "accountNickName":"Cuenta BBVA",
+                            "accountLast4":"6122",
+                            "availableBal": 220.95,
+                            "accountType": "OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "67245267361",
+                            "accountNickName":"Credit account",
+                            "accountLast4":"6610",
+                            "availableBal": 1223.22,
+                            "accountType": "OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "25965",
+                            "accountNickName": "Johnny",
+                            "accountLast4": "2696",
+                            "accountType": "EXT_OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "259653434",
+                            "accountNickName": "ING",
+                            "accountLast4": "3698",
+                            "accountType": "EXT_OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "255",
+                            "accountNickName": "SANTANDER",
+                            "accountLast4": "8996",
+                            "accountType": "EXT_OWN_ACCOUNT"
+                        },
+                        {
+                            "key": "255",
+                            "accountNickName": "SANTANDER",
+                            "accountLast4": "8996",
+                            "accountType": "EXT_OWN_ACCOUNT"
+                        }
+                    ],
+                    "otherAccounts": [
+                        {
+                            "group": "J",
+                            "accounts": [
+                                {
+                                    "accountLast4": "6133",
+                                    "payeeId": "241",
+                                    "payeeType": "W",
+                                    "payeeName": "James Bond",
+                                    "payeeNickname": "bond007"
+                                }
+                            ]
+                        },
+                        {
+                            "group": "S",
+                            "accounts": [
+                                {
+                                    "accountLast4": "5566",
+                                    "payeeId": "166259",
+                                    "payeeType": "W",
+                                    "payeeName": "Steve",
+                                    "payeeNickname": "Vaugh"
+                                },
+                                {
+                                    "accountLast4": "9282",
+                                    "payeeId": "156123",
+                                    "payeeType": "A",
+                                    "payeeName": "Steve",
+                                    "payeeNickname": "McQueen"
+                                },
+                                {
+                                    "accountLast4": "6132",
+                                    "payeeId": "223422",
+                                    "payeeType": "T",
+                                    "payeeName": "Steve",
+                                    "payeeNickname": "Rogers"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+
+
+## Do transfer without valid third party accounts [/pages/transfers/transfer.json?mockId=2]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "pageContent": {
+                "fromAccounts": [
+                    {
+                        "key": "51251414141",
+                        "accountNickName": "Johnny",
+                        "accountLast4": "5566",
+                        "availableBal": 11000
+                    },
+                    {
+                        "key": "1515235113241",
+                        "accountNickName": "BBVA Account",
+                        "accountLast4": "1166",
+                        "availableBal": 1000.55
+                    },
+                    {
+                        "key": "616116151421",
+                        "accountNickName":"Cuenta BBVA",
+                        "accountLast4":"6122",
+                        "availableBal": 220.95
+                    }
+                ],
+                "toAccounts": {
+                    "ownAccounts": [
+                        {
+                            "key": "51251414141",
+                            "accountNickName": "Johnny",
+                            "accountLast4": "5566",
+                            "availableBal": 11000
+                        },
+                        {
+                            "key": "1515235113241",
+                            "accountNickName": "BBVA Account",
+                            "accountLast4": "1166",
+                            "availableBal": 1000.55
+                        },
+                        {
+                            "key": "616116151421",
+                            "accountNickName":"Cuenta BBVA",
+                            "accountLast4":"6122",
+                            "availableBal": 220.95
+                        },
+                        {
+                            "key": "67245267361",
+                            "accountNickName":"Credit account",
+                            "accountLast4":"6610",
+                            "availableBal": 1223.22
+                        }
+                    ],
+                    "otherAccounts": null
+                }
+            }
+        }
+
+
+## Do transfer with only one own account [/pages/transfers/transfer.json?mockId=3]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "pageContent": {
+                "properties": [
+                    {
+                        "payeeType": "T",
+                        "limits": {
+                            "transferLimit": 1000.00,
+                            "dailyLimit": 1500.00,
+                            "monthlyLimit": 3000.00
+                        },
+                        "fee": null
+                    },
+                    {
+                        "payeeType": "W",
+                        "limits": {
+                            "transferLimit": 1000.00,
+                            "dailyLimit": 1500.00,
+                            "monthlyLimit": 3000.00
+                        },
+                        "fee": null
+                    },
+                    {
+                        "payeeType": "A",
+                        "limits": {
+                            "transferLimit": 1000.00,
+                            "dailyLimit": 1500.00,
+                            "monthlyLimit": 3000.00
+                        },
+                        "fee": 3.00
+                    }
+                ],
+                "fromAccounts": [
+                    {
+                        "key": "51251414141",
+                        "accountNickName": "Johnny",
+                        "accountLast4": "5566",
+                        "availableBal": 11000
+                    }
+                ],
+                "toAccounts": {
+                    "ownAccounts": null,
+                    "otherAccounts": [
+                        {
+                            "group": "J",
+                            "accounts": [
+                                {
+                                    "accountLast4": "6133",
+                                    "payeeId": "241",
+                                    "payeeType": "W",
+                                    "payeeName": "James Bond",
+                                    "payeeNickname": "bond007"
+                                }
+                            ]
+                        },
+                        {
+                            "group": "S",
+                            "accounts": [
+                                {
+                                    "accountLast4": "5566",
+                                    "payeeId": "166259",
+                                    "payeeType": "W",
+                                    "payeeName": "Steve",
+                                    "payeeNickname": "Vaugh"
+                                },
+                                {
+                                    "accountLast4": "9282",
+                                    "payeeId": "156123",
+                                    "payeeType": "A",
+                                    "payeeName": "Steve",
+                                    "payeeNickname": "McQueen"
+                                },
+                                {
+                                    "accountLast4": "6132",
+                                    "payeeId": "223422",
+                                    "payeeType": "T",
+                                    "payeeName": "Steve",
+                                    "payeeNickname": "Rogers"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        
+                
+## Do transfer withouth accounts [/pages/transfers/warning.json?mockId=accounts]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "header": {
+                "title": "transfer.dotransfer.title"
+            },
+            "pageContent": "transfer.dotransfer.accounts.warning"
+        }
+
+## Do transfer with changed profile [/pages/transfers/warning.json?mockId=profile]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "header": {
+                "title": "transfer.dotransfer.title"
+            },
+            "pageContent": "transfer.dotransfer.profile.changed.warning"
+        }
+        
+        
+# Group Transfer confirmation
+
+Form parameters: -
+
+_eventId:
+<ul>
+    <li>To confirm transfer: confirm</li>
+</ul>
+
+## Confirm one time transfer [/pages/transfers/confirm.json]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "pageContent": {
+                "transfer": {
+                    "transferId": "1234",
+                    "type": "WITHIN_BANK",
+                    "date": 12351141411,
+                    "from": {
+                        "description": "Checking",
+                        "accountLast4": "6423"
+                    }, 
+                    "to": {
+                        "description": "SPCA of Texas",
+                        "accountLast4": null
+                    },
+                    "amount": 100,
+                    "frequency": "ONE_TIME",
+                    "repetitions": null,
+                    "properties": { 
+                        "fee": 3.00,
+                        "dates": {
+                            "transferDate": 16562341453,
+                            "effectiveDate": 1636432252263
+                        }
+                    }
+                }
+            }
+        }
+        
+
+## Confirm monthly transfer [/pages/transfers/confirm.json?mockId=monthly]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "pageContent": {
+                "transfer": {
+                    "transferId": "1234",
+                    "status": "PENDING",
+                    "type": "O",
+                    "date": 12351141411,
+                    "from": {
+                        "description": "Checking",
+                        "accountLast4": "6423"
+                    }, 
+                    "to": {
+                        "description": "SPCA of Texas",
+                        "accountLast4": null
+                    }
+                    "amount": 100,
+                    "frequency": "MONTHLY",
+                    "repetitions": 3
+                }
+            }
+        }
+        
+        
+# Group Transfer details
+
+Form parameters: -
+
+_eventId:
+<ul>
+    <li>To transfer list: back</li>
+</ul>
+
+## List of transfer details [/pages/transfers/details.json]
+### Valid [GET]
++ Response 200 (application/json)
+
+        {
+            "header": {
+                "showMenu": true
+            },
+            "pageContent": {
+                "empty": false,
+                "transfers": [
+                    {
+                        "transferId": "1234",
+                        "status": "PENDING",
+                        "type": "WITHIN_BANK",
+                        "date": 12351141411,
+                        "from": {
+                            "description": "Checking",
+                            "accountLast4": "6423"
+                        }, 
+                        "to": {
+                            "description": "SPCA of Texas",
+                            "accountLast4": null
+                        },
+                        "amount": 100,
+                        "referenceNr": "435235134525",
+                        "frequency": "MONTHLY",
+                        "repetitions": 4
+                    },
+                    {
+                        "transferId": "4362252",
+                        "status": "POSTED",
+                        "type": "WITHIN_BANK",
+                        "date": 1262422353,
+                        "from": {
+                            "description": "Checking",
+                            "accountLast4": "4523"
+                        }, 
+                        "to": {
+                            "description": "SPCA of Texas",
+                            "accountLast4": "2224"
+                        },
+                        "amount": 25,
+                        "referenceNr": "t643225353",
+                        "frequency": "WEEKLY",
+                        "repetitions": 6
+                    },
+                    {
+                        "transferId": "1234",
+                        "status": "PENDING",
+                        "type": "OWN_ACCOUNTS",
+                        "date": 12351141411,
+                        "from": {
+                            "description": "Checking",
+                            "accountLast4": null
+                        }, 
+                        "to": {
+                            "description": "SPCA of Texas",
+                            "accountLast4": null
+                        },
+                        "amount": 62,
+                        "referenceNr": "6353533522",
+                        "frequency": "ONE_TIME"
+                    }
+                ]
+            }
+        }
